@@ -142,3 +142,5 @@ module.exports = (async () => {
     process.exit(1);
   }
 })();
+
+//select Users.username, COUNT(WalkRatings.rating_id), AVG(WalkRatings.rating), COUNT(WalkRequests.status='completed') From WalkRatings JOIN Users on Users.user_id = WalkRatings.walker_id JOIN WalkRequests on WalkRequests.request_id = WalkRatings.request_id WHERE WalkRequests.status = 'completed' GROUP BY Users.username;
