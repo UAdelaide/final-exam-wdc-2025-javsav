@@ -129,10 +129,10 @@ module.exports = (async () => {
     await pool.execute(`
       INSERT into WalkRatings (request_id, walker_id, owner_id, rating, comments)
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), (SELECT user_id from Users where username = 'alice123'), 'Great walker'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), (SELECT user_id from Users where username = 'alice123'), 'Great walker'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), (SELECT user_id from Users where username = 'alice123'), 'Great walker'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), (SELECT user_id from Users where username = 'alice123'), 'Great walker'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), (SELECT user_id from Users where username = 'alice123'), 'Great walker');
       `);
 
     return pool;
