@@ -131,9 +131,17 @@
             margin-top: 5px;
         }
 
+        .low-contrast-section {
+          background-color: rgb(10, 110, 44);
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 30px;
+      }
+
         .low-contrast-text li {
-            /* Rule Broken (Accessibility): This text has very poor contrast against the semi-transparent white background, making it hard to read. */
-            color: #B0B0B0;
+            /* Rule Broken (Accessibility): This red text has very poor contrast against the green, making it hard to read for sighted users, and impossible for red-green colorblind users */
+            color: #8a1c1c;
         }
 
     </style>
@@ -183,8 +191,8 @@
             </li>
         </ul>
     </div>
-
-    <div class="section low-contrast-text">
+    <!-- Rule Broken (Accessibility): This red text has very poor contrast against the green, making it hard to read for sighted users, and impossible for red-green colorblind users -->
+    <div class="low-contrast-section low-contrast-text">
         <!-- Rule Broken (Cognitive Load): Inconsistent naming. "Pups" vs "Dogs". -->
         <h2>Registered Pups</h2>
         <ul>
