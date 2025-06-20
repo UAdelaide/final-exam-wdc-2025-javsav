@@ -19,7 +19,7 @@
       <input id ="username" type="text"><br>
       <label for="password">password</label><br>
       <input id="password" type="password"><br>
-      <button class="login-button" type="submit">login</button>
+      <button class="login-button" type="submit">login</button> <button class="login-button" type="button" onclick="goToRegistration()">register</button>
     </form>
 
     <!-- <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
@@ -28,24 +28,31 @@
   </div>
 
   <script>
+  // Redirects user to register
+  function goToRegistration() {
+    window.location.href = "/register.html";
+  }
+// Wait for the page to load
+document.addEventListener('DOMContentLoaded', () => {
   // Get login form from the DOM
   const form = document.getElementById('login-form');
   const formMessageDiv = document.getElementById('form-message');
+  const messageDiv = formMessageDiv;
   form.addEventListener('submit', async (event) => {
   event.preventDefault(); // Prevent default event on form submission
 
   formMessageDiv.textContent = '';
   // Get user's entered username and password from the form
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
+  const usernameInput = document.getElementById('username').value;
+  const passwordInput = document.getElementById('password').value;
 
   const formData = {
-      username: usernameInput.value,
-      password: passwordInput.value
+      username: usernameInput,
+      password: passwordInput
   };
   // Send POST request to the server
   try {
-      const response = await fetch('/login', {
+      const response = await fetch('/api/users/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -57,10 +64,12 @@
       // Login successful
       if (response.ok) {
           formMessageDiv.textContent = result.message || 'Login successful!';
+          messageDiv.classList.remove('error');
           formMessageDiv.classList.add('success'); // Display success message in green
           formMessageDiv.style.display = 'block';
           form.reset();
-          window.location.href = '/dashboard';
+          // Redirect user to correct page based upon their role
+            window.location.href = '/dashboard';
       } else { // Error with login
           formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
           formMessageDiv.classList.add('error');
@@ -73,6 +82,7 @@
       formMessageDiv.classList.add('error'); // Display error message in red
       formMessageDiv.style.display = 'block';
   }
+});
 });
 
     const { createApp } = Vue;

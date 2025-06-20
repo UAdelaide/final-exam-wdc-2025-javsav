@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 
+module.exports = function(pool) {
+
 // GET all walk requests (for walkers to view)
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await db.query(`
+    const [rows] = await pool.query(`
       SELECT wr.*, d.name AS dog_name, d.size, u.username AS owner_name
       FROM WalkRequests wr
       JOIN Dogs d ON wr.dog_id = d.dog_id
@@ -24,7 +26,7 @@ router.post('/', async (req, res) => {
   const { dog_id, requested_time, duration_minutes, location } = req.body;
 
   try {
-    const [result] = await db.query(`
+    const [result] = await pool.query(`
       INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location)
       VALUES (?, ?, ?, ?)
     `, [dog_id, requested_time, duration_minutes, location]);
@@ -59,4 +61,6 @@ router.post('/:id/apply', async (req, res) => {
   }
 });
 
-module.exports = router;
+  return router;
+
+};

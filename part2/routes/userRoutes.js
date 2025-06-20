@@ -1,31 +1,85 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../models/db');
+var express = require('express');
+const bcrypt = require('bcrypt');
+var router = express.Router();
+require('dotenv').config();
+
+
+module.exports = function(pool) {
+// Checks for invalid characters for a username
+function containsInvalidChars(term) {
+    const invalidCharsRegex = /[^a-zA-Z0-9_]/; // Matches anything not alphanumeric or underscore
+    return invalidCharsRegex.test(term);
+}
+
+// Checks if an email is valid
+function isValidEmail(email) {
+  const emailRegex = new RegExp(
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+
+  return emailRegex.test(email);
+}
 
 // GET all users (for admin/testing)
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT user_id, username, email, role FROM Users');
+    const [rows] = await pool.query('SELECT user_id, username, email, role FROM Users');
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 
-// POST a new user (simple signup)
+
+/* Receive register requests */
 router.post('/register', async (req, res) => {
-  const { username, email, password, role } = req.body;
+    console.log('Received registration request:', req.body.username, req.body.email);
 
-  try {
-    const [result] = await db.query(`
-      INSERT INTO Users (username, email, password_hash, role)
-      VALUES (?, ?, ?, ?)
-    `, [username, email, password, role]);
+    // Get request body
+    const { username, email, password, role, confirmedPassword } = req.body;
 
-    res.status(201).json({ message: 'User registered', user_id: result.insertId });
-  } catch (error) {
-    res.status(500).json({ error: 'Registration failed' });
-  }
+    // validation
+
+    if (!username || !email || !password) {
+        return res.status(400).json({ message: 'Username, email, and password are required.' });
+    }
+
+    if (password !== confirmedPassword) {
+        return res.status(400).json({ message: 'Passwords do not match. Please try again.' });
+    }
+
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ message: 'Invalid email address entered. Please try again.' });
+    }
+
+    try {
+        // Hash password
+        const saltRounds = 10;
+        const passwordHash = await bcrypt.hash(password, saltRounds);
+        console.log('Password hashed successfully.');
+
+        // Insert into database
+        const sql = 'INSERT INTO Users (username, email, password_hash, role) VALUES (?, ?, ?, ?)';
+        const values = [username, email, passwordHash, role];
+
+
+        const [result] = await pool.query(sql, values);
+        const userId = result.insertId;
+        console.log('User inserted successfully, ID:', userId);
+
+        res.status(201).json({ message: 'User registered successfully!', userId: result.insertId });
+
+    } catch (error) {
+        console.error('Registration error:', error);
+
+        // Handle duplicate entry
+        if (error.code === 'ER_DUP_ENTRY') {
+          return res.status(409).json({ message: 'Username or email already exists.' });
+        }
+
+        // Other errors
+        res.status(500).json({ message: 'Internal server error during registration.' });
+    }
 });
 
 router.get('/me', (req, res) => {
@@ -35,24 +89,64 @@ router.get('/me', (req, res) => {
   res.json(req.session.user);
 });
 
-// POST login (dummy version)
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+/* Receive login requests */
+  router.post('/login', async (req, res) => {
+  console.log('Received login request:', req.body.username);
 
-  try {
-    const [rows] = await db.query(`
-      SELECT user_id, username, role FROM Users
-      WHERE email = ? AND password_hash = ?
-    `, [email, password]);
+  // Get POST request body
+  const { username, password } = req.body;
 
-    if (rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+   if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required.' });
+}
+
+try {
+  // Query database for user
+   const sql = 'SELECT user_id, email, username, password_hash, role FROM Users WHERE username = ?';
+    const values = [username];
+
+    const [results] = await pool.query(sql, values);
+
+    if (results.length === 0) {
+        console.log(`Login attempt failed: User '${username}' not found.`);
+        return res.status(401).json({ message: 'Invalid credentials.' });
     }
 
-    res.json({ message: 'Login successful', user: rows[0] });
-  } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-  }
-});
+    const user = results[0];
+    console.log(user.user_id, user.email, user.username, user.password_hash, user.role);
+    const storedPasswordHash = user.password_hash;
+    const passwordMatches = await bcrypt.compare(password, storedPasswordHash);
 
-module.exports = router;
+    if (passwordMatches) {
+        // --- Login Successful ---
+
+        // Store session data in req.session.user
+        req.session.userId = user.user_id;
+        req.session.username = user.username;
+        req.session.user = {
+            id: user.user_id,
+            username: user.username,
+            email: user.email,
+            role: user.role
+        };
+        res.status(200).json({
+            message: 'Login successful!',
+            userId: user.user_id,
+            username: user.username,
+            role: user.role
+        });
+
+    } else {
+        // Passwords do not match
+        console.log(`Login attempt failed: Incorrect password for user '${username}'.`);
+        return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+
+} catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Internal server error during login.' });
+}
+});
+  // Return the router
+  return router;
+};
