@@ -120,9 +120,9 @@ module.exports = (async () => {
       INSERT into WalkApplications (request_id, walker_id, status)
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),,
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),,
-  ((SELECT dog_id FROM Dogs WHERE name = 'Stinky'), '2025-06-21 12:35:00', 25, 'Glenelg', 'accepted');
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
       `);
     return pool;
 
