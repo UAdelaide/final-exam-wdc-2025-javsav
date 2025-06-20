@@ -32,4 +32,21 @@ router.get('/api/dogs', async function(req, res, next) {
 }
 });
 
+/* Returns a list of all open walk requests */
+router.get('/api/walkrequests/open', async function(req, res, next) {
+  try {
+
+  const [result] = await pool.query(
+        'SELECT WalkRequests.request_id, Dogs.name as dog_name, WalkRequests.requested_time, WalkRequests.duration_minutes, WalkRequests.location, Users.username as owner_username FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id JOIN Users on Users.user_id = Dogs.owner_id'
+  );
+  res.json({
+    requests: result
+  });
+} catch (error) {
+  console.error('Error retrieving list of open walk requests from database: ' + error);
+  res.status(500).json({ message: 'Internal server error when fetching walk request list.' });
+}
+});
+
+
 module.exports = router;
