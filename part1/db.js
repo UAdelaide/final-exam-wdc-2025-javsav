@@ -117,7 +117,7 @@ module.exports = (async () => {
 
      // Insert data
     await pool.execute(`
-      INSERT into WalkApplications (request_id, walker_)
+      INSERT into WalkApplications (request_id, walker_id, applied_at, status)
   VALUES ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
   ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
   ((SELECT dog_id FROM Dogs WHERE name = 'Diesel'), '2025-06-25 12:00:00', 60, 'Norwood', 'open'),
