@@ -1,0 +1,102 @@
+@keyframes colorchange {
+          0%   {background: #f0f8ff;}
+          25%  {background: #f5f5dc;}
+          50%  {background: #fff0f5;}
+          75%  {background: #f0fff0;}
+          100% {background: #f0f8ff;}
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 2em;
+            /* Rule Break (Cognitive Load): The constantly changing background is distracting and makes it hard to focus. */
+            animation: colorchange 10s infinite;
+        }
+
+        #app {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .title {
+            /* Rule Break (Accessibility): This is a page title but is not a <h1>, making it harder for screen readers to understand the page structure. */
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Rule Break (Accessibility): Disabling the focus outline makes keyboard navigation nearly impossible for sighted users. */
+        *:focus {
+            outline: none;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .dog-of-the-day-container {
+            text-align: center;
+        }
+
+        .dog-of-the-day-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .walker-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .walker-info-trigger {
+            /* Rule Break (Kinematic Load): This tiny, non-obvious trigger requires precise mouse movement to reveal information. */
+            cursor: pointer;
+            font-size: 10px;
+            padding: 2px 5px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-left: 10px;
+            user-select: none; /* prevent text selection */
+        }
+
+        .walker-details {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .low-contrast-text li {
+            /* Rule Break (Accessibility): This text has very poor contrast against the semi-transparent white background, making it hard to read. */
+            color: #B0B0B0;
+        }
