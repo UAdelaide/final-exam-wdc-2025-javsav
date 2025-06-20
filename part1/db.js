@@ -10,9 +10,7 @@ const dbConfig = {
   queueLimit: 0
 };
 
-let pool;
-
-(async () => {
+module.exports = (async () => {
   try {
     // Connect to MySQL without specifying a database
     const connection = await mysql.createConnection({
@@ -26,7 +24,7 @@ let pool;
     await connection.end();
 
     // Create database connection pool
-    pool = mysql.createPool(dbConfig);
+    const pool = mysql.createPool(dbConfig);
 
     // Create tables
     await pool.execute(`
@@ -116,9 +114,11 @@ let pool;
   ((SELECT dog_id FROM Dogs WHERE name = 'Woggy'), '2025-06-22 09:00:00', 30, 'Burnside', 'open'),
   ((SELECT dog_id FROM Dogs WHERE name = 'Stinky'), '2025-06-21 12:35:00', 25, 'Glenelg', 'accepted');
       `);
+
+    return pool;
+
   } catch (err) {
     console.error('Error setting up database.', err);
+    process.exit(1);
   }
 })();
-
-module.exports = pool;

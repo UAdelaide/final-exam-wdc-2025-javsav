@@ -1,4 +1,5 @@
 var express = require('express');
+const mysql = require('mysql2/promise');
 var app = express();
 var router = express.Router();
 const pool = require('./../db');
@@ -9,8 +10,5 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/api/dogs', function(req, res, next) {
-
-});
 
 module.exports = router;
