@@ -6,7 +6,7 @@
     <title>Dog Walker Dashboard</title>
     <script src="https://unpkg.com/vue@3"></script>
     <style>
-
+        /* Background changes colour continually */
         @keyframes colorchange {
           0%   {background: #f0f8ff;}
           25%  {background: #f5f5dc;}
@@ -105,6 +105,7 @@
           width: 200px;
           position: absolute;
           margin-left: -600px;
+          font-size: 10px;
         }
 
         .walker-item {
@@ -114,7 +115,7 @@
         }
 
         .walker-info-trigger {
-            /* Rule Broken (Kinematic Load): This tiny, non-obvious trigger requires precise mouse movement to reveal information. */
+            /* Rule Broken (Kinematic Load/Cognitive Load): This tiny, non-obvious trigger requires precise mouse movement to reveal information. */
             cursor: pointer;
             font-size: 10px;
             padding: 2px 5px;
@@ -149,6 +150,7 @@
         <p v-else>Fetching a good boy...</p>
     </div>
     <!-- Rule Broken (Cognitive Load): The login button is not in the position that users would expect it to be based on its location in other websites -->
+     <!--Rule Broken (kinematic load): The login text is quite far away from the rest of the website, and there is no button, so the target is small-->
     <div class="login">
       <a href="/login">login</a>
     </div>
@@ -160,7 +162,7 @@
             <li v-for="request in walkRequests" :key="request.request_id">
                 <strong>{{ request.dog_name }}</strong> needs a walk for {{ request.duration_minutes }} mins in {{ request.location }}.
                 <br>
-                <!-- Rule Broken (Cognitive Load): The date is shown in a raw, non-human-friendly format, forcing the user to mentally parse it. -->
+                <!-- Rule Broken (Cognitive Load): The date is shown in a raw format, forcing the user to mentally parse it. -->
                 <small>Time: {{ request.requested_time }}</small>
             </li>
         </ul>
@@ -171,7 +173,7 @@
         <ul>
             <li v-for="walker in walkers" :key="walker.walker_username" class="walker-item">
                 <span>{{ walker.walker_username }}</span>
-                <!-- Rule Broken (Kinematic Load): Information is hidden behind a hover event on a tiny target. -->
+                <!-- Rule Broken (Kinematic Load & Cognitive Load): Information is hidden behind a hover event on a tiny target. -->
                 <div @mouseover="showWalkerDetails(walker)" @mouseleave="hideWalkerDetails(walker)">
                     <span class="walker-info-trigger">?</span>
                     <div v-if="walker.detailsVisible" class="walker-details">
