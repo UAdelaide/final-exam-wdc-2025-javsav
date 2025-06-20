@@ -127,7 +127,7 @@ module.exports = (async () => {
 
          // Insert ratings data
     await pool.execute(`
-      INSERT into WalkRatings (request_id, walker_id, status)
+      INSERT into WalkRatings (request_id, walker_id, owner_id, rating, comments)
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
