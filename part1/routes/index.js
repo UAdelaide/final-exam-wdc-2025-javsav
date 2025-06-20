@@ -53,7 +53,7 @@ router.get('/api/walkers/summary', async function(req, res, next) {
   try {
 
   const [result] = await pool.query(
-        'SELECT '
+        'SELECT Walker'
   );
   res.json({
     requests: result
