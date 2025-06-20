@@ -85,7 +85,7 @@ module.exports = (async () => {
         CONSTRAINT unique_rating_per_walk UNIQUE (request_id)
     );`);
 
-    // Insert data
+    // Insert user data
     await pool.execute(`
             INSERT into Users (username, email, password_hash, role)
     VALUES ('alice123', 'alice@example.com', 'hashed123', 'owner'),
@@ -95,7 +95,7 @@ module.exports = (async () => {
     ('sad_woman', 'sad@woman.com', '$2b$10$7ivWqdUnMRNSqJD', 'walker');
       `);
 
-       // Insert data
+       // Insert dog data
     await pool.execute(`
             INSERT into Dogs (name, size, owner_id)
     VALUES ('Max', 'medium', (SELECT user_id FROM Users WHERE username = 'alice123')),
@@ -105,7 +105,7 @@ module.exports = (async () => {
     ('Woggy', 'small', (SELECT user_id FROM Users WHERE username = 'carol123'));
       `);
 
-       // Insert data
+       // Insert walkrequest data
     await pool.execute(`
       INSERT into WalkRequests (dog_id, requested_time, duration_minutes, location, status)
   VALUES ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
@@ -115,7 +115,7 @@ module.exports = (async () => {
   ((SELECT dog_id FROM Dogs WHERE name = 'Stinky'), '2025-06-21 12:35:00', 25, 'Glenelg', 'accepted');
       `);
 
-     // Insert data
+     // Insert walkapplication data
     await pool.execute(`
       INSERT into WalkApplications (request_id, walker_id, status)
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
@@ -125,16 +125,16 @@ module.exports = (async () => {
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
       `);
 
-         // Insert data
+         // Insert ratings data
     await pool.execute(`
-      INSERT into WalkApplications (request_id, walker_id, status)
+      INSERT into WalkRatings (request_id, walker_id, status)
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
       `);
-      
+
     return pool;
 
   } catch (err) {
