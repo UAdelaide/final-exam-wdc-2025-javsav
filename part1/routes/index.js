@@ -53,7 +53,7 @@ router.get('/api/walkers/summary', async function(req, res, next) {
   try {
 
   const [result] = await pool.query(
-        'SELECT WalkRequests.request_id, Dogs.name as dog_name, WalkRequests.requested_time, WalkRequests.duration_minutes, WalkRequests.location, Users.username as owner_username FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id JOIN Users on Users.user_id = Dogs.owner_id'
+        'SELECT '
   );
   res.json({
     requests: result
