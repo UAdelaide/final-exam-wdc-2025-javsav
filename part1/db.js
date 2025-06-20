@@ -121,9 +121,20 @@ module.exports = (async () => {
   VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
-  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),,
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),
   ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
       `);
+
+         // Insert data
+    await pool.execute(`
+      INSERT into WalkApplications (request_id, walker_id, status)
+  VALUES ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Max'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Bella'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Diesel'), (SELECT user_id from Users where username = 'bobwalker'), 'accepted'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Woggy'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted'),
+  ((SELECT WalkRequests.request_id FROM WalkRequests JOIN Dogs on Dogs.dog_id = WalkRequests.dog_id WHERE Dogs.name = 'Stinky'), (SELECT user_id from Users where username = 'sad_woman'), 'accepted');
+      `);
+      
     return pool;
 
   } catch (err) {
