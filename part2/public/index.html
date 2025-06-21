@@ -176,11 +176,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    const { createApp } = Vue;
+    const { createAppref, onMounted } = Vue;
     createApp({
 
       setup() {
+    const dogs = ref([]);
+const isLoading = ref(true); // Used to loading message
 
+// Fetch dog list data from api and image from from dogapi
+const fetchAllData = async () => {
+    try {
+        // Fetch dogs from backend
+        const dogsResponse = await fetch('/api/dogs');
+        if (!dogsResponse.ok) {
+            throw new Error('Failed to fetch dog list from the server.');
+        }
+        const dogsData = await dogsResponse.json();
+
+        // Fetch random image from dog api
+        const imageFetchPromises = dogsData.dogs.map(async (dog) => {
+            try {
+                const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
+                const imageData = await imageResponse.json();
+
+                // Add the new imageUrl to the dog object
+                if (imageData.status === 'success') {
+                    return { ...dog, imageUrl: imageData.message };
+                }
+            } catch (e) {
+                console.error('Failed to fetch an image for a dog', e);
+            }
+
+            return { ...dog, imageUrl: null };
+        });
+
+        const dogsWithImages = await Promise.all(imageFetchPromises);
+
+        // Update dogs array with data
+        dogs.value = dogsWithImages;
+
+    } catch (error) {
+        console.error('Error in fetchAllData:', error);
+
+    } finally {
+        // Hide loading message
+        isLoading.value = false;
+    }
+};
       },
       data() {
         return {
