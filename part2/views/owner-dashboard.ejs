@@ -26,7 +26,7 @@
         <select name="dog-name" id="dog-name" v-model="form.dog_id">
           <% dogs.forEach(dog => { %>
 
-         <option value="<%= dog.name %>"><%= dog.name %></option>
+         <option value="<%= dog.dog_id %>"><%= dog.name %></option>
          <% }); %>
          </select><br>
          <% } else { %>
