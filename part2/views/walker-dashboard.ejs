@@ -61,7 +61,7 @@
           }
         }
 
-        async function getCurrentUser() {
+      async function getCurrentUser() {
           try {
             const response = await fetch('/api/users/me', {
               method: 'GET'
@@ -72,7 +72,7 @@
       } catch (error) {
           console.error('Error getting userid:', error);
       }
-        }
+      }
 
         async function applyToWalk(requestId) {
           try {
