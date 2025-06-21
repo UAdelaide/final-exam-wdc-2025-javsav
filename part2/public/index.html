@@ -97,7 +97,7 @@
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
             let newDogImageCell = document.createElement('td');
-            newDogImageCell.innerHTML = ``
+            newDogImageCell.innerHTML = `<img src=${dog.imageUrl}>`
             let newOwner = document.createElement('td');
             newOwner.textContent = dog.owner_username;
             console.log(dog.owner_username);
