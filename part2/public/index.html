@@ -86,7 +86,7 @@
             let newDogImageCell = document.createElement('td');
             let dogImageDiv = document.createElement('div');
             dogImageDiv.className = 'dog-image-div';
-            
+            // Fetch random dog image from dog api
             const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
             const imageData = await imageResponse.json();
             dogImageDiv.innerHTML = `<img class="dog-image" src=${imageData.message} alt="A random picture of a dog">`;
