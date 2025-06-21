@@ -57,12 +57,12 @@
   function goToRegistration() {
     window.location.href = "/register.html";
   }
-  let dogListWithImages;
+
   async function loadDogList() {
     // Fetch the list of dogs from the database
     const formMessageDiv = document.getElementById('form-message');
   const dogTable = document.getElementById('dog-table');
-
+  let dogListWithImages;
   // Send POST request to the server
   try {
       const response = await fetch('/api/dogs', {
