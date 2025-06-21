@@ -143,7 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (result.ok) {
         if (result.length > 0) {
           result.forEach(dog => {
-            let newDogName = document.createElement('td')
+            let newDogName = document.createElement('td');
+            newDogName.textContent = dog.name;
+            
           });
         }
 
