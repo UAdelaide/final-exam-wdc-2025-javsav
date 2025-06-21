@@ -23,7 +23,7 @@
             <label for="dog-name" class="form-label">Select your dog</label><br>
 
           <% if (dogs && dogs.length > 0) { %>
-        <select name="dog-name" id="dog-name">
+        <select name="dog-name" id="dog-name" v-model="form.dog_id">
           <% dogs.forEach(dog => { %>
 
          <option value="<%= dog.name %>"><%= dog.name %></option>
