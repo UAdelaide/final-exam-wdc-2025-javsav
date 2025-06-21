@@ -147,6 +147,22 @@ try {
     res.status(500).json({ message: 'Internal server error during login.' });
 }
 });
-  // Return the router
+
+// Destroy session data (log user out)
+router.get('/logout', (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Session destruction error:", err);
+            return next(err);
+        }
+        // Session destroyed successfully
+
+        res.clearCookie('connect.sid');
+
+        res.redirect('/index.html');
+    });
+});
+
+
   return router;
 };

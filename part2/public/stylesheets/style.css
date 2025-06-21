@@ -117,6 +117,48 @@ button:hover {
     color: rgb(255, 255, 255);
 }
 
+/* Logout button styling */
+
+.logout-button {
+    background-color: rgb(0, 149, 255);
+    border: hidden;
+    border-radius: 0.3em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+    margin-top: 10px;
+    height: 45px;
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: rgb(6, 210, 224);
+    color: rgb(255, 255, 255);
+}
+
+.logout-button-green {
+    background-color: rgba(23, 131, 13, 0.89);
+    border: hidden;
+    border-radius: 0.3em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+    margin-top: 10px;
+    height: 45px;
+    color: white;
+}
+
+.logout-button-green:hover {
+    background-color: rgb(113, 224, 22);
+    color: rgb(255, 255, 255);
+}
+
+.logout {
+    width: 400px;
+    margin-left: 1200px;
+    margin-top: -92px;
+    margin-bottom: 40px;
+}
+
+
 /* Styling for error and success messages */
 #form-message {
     padding: 10px;
