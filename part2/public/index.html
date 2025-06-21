@@ -94,7 +94,6 @@
       if (response.ok) {
         const dogs = await response.json();
         const dogsList = dogs.dogs;
-        console.log("test");
         if (dogsList.length > 0) {
           dogsList.forEach(dog => {
             console.log(dog.dog_name);
