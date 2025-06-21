@@ -156,8 +156,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
   } catch (error) { // Catch any errors and display error message
-      console.error('Login failed:', error);
-      formMessageDiv.textContent = 'Login failed. Please try again later.';
+      console.error('Error loading dog list', error);
+      formMessageDiv.textContent = 'Error loading list of dogs.';
       formMessageDiv.classList.add('error'); // Display error message in red
       formMessageDiv.style.display = 'block';
   }
