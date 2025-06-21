@@ -185,17 +185,6 @@ button:hover {
 
 /* Style for table */
 
-.table-hovered {
-    background-color: rgba(124, 187, 184, 0.767);
-}
-
-td {
-background-color: rgba(124, 187, 184, 0.767);
-}
-
-tr {
-    background-color: rgba(124, 187, 184, 0.767);
-}
 
 .h2-table {
   text-align: center;
@@ -204,6 +193,7 @@ tr {
 
 .table-bordered {
   border: 1px solid #ddd !important;
+  width: 800px;
 }
 
 table caption {
