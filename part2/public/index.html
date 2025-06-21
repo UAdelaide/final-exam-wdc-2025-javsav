@@ -75,12 +75,28 @@
         const dogs = await response.json();
         const dogsList = dogs.dogs;
         if (dogsList.length > 0) {
+          const imageFetchPromises = dogsList.map(async (dog) => {
+                try {
+                    const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
+                    const imageData = await imageResponse.json();
+
+                    // Add the new imageUrl to the dog object
+                    if (imageData.status === 'success') {
+                        // Return a new object with the original dog data plus the image URL
+                        return { ...dog, imageUrl: imageData.message };
+                    }
+                } catch (e) {
+                    console.error('Failed to fetch an image for a dog', e);
+                }
+                // If the image fetch fails, still return the dog data but with a null image
+                return { ...dog, imageUrl: null };
+            });
           dogsList.forEach(dog => {
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
             let newDogImageCell = document.createElement('td');
-            
+
             let newOwner = document.createElement('td');
             newOwner.textContent = dog.owner_username;
             console.log(dog.owner_username);
