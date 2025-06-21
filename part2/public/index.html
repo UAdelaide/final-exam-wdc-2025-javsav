@@ -90,10 +90,9 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
-        dogListWithImages = await Promise.all(imageFetchPromises);
     });
     // Iterate through each dog and display in the table
-            dogsList.forEach(dog => {
+          dogsList.forEach(dog => {
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
@@ -101,6 +100,7 @@
             newDogImageCell.innerHTML = `<img src=${dog.imageUrl} alt="A random picture of a dog">`;
             let newOwner = document.createElement('td');
             newOwner.textContent = dog.owner_username;
+            console.log(dog.owner_username);
             let newSize = document.createElement('td');
             newSize.textContent = dog.size;
 
@@ -126,8 +126,6 @@
       formMessageDiv.style.display = 'block';
   }
   }
-
-
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async () => {
   // Get login form from the DOM
