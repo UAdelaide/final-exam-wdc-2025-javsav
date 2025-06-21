@@ -91,6 +91,7 @@
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
     });
+    // Iterate through each dog and display in the table
           dogsList.forEach(dog => {
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
