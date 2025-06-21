@@ -93,6 +93,7 @@
       // Fetched dog list successfully
       if (response.ok) {
         const dogs = await response.json();
+        const dogsList = dogs.dogs;
         console.log("test");
         if (dogs.length > 0) {
           result.forEach(dog => {
