@@ -95,8 +95,8 @@
         const dogs = await response.json();
         const dogsList = dogs.dogs;
         console.log("test");
-        if (dogs.length > 0) {
-          result.forEach(dog => {
+        if (dogsList.length > 0) {
+          dogsList.forEach(dog => {
             console.log(dog.dog_name);
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
