@@ -62,7 +62,24 @@
         }
 
         async function getCurrentUser() {
-          
+          try {
+            const response = await fetch('/api/users/me', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  reviewId: reviewId
+              })
+          });
+          const result = await response.json();
+
+
+
+
+      } catch (error) {
+          console.error('Error deleting review:', error);
+      }
         }
 
         async function applyToWalk(requestId) {
