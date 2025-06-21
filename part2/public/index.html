@@ -90,6 +90,7 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
+        dogListWithImages = await Promise.all()
     });
     // Iterate through each dog and display in the table
           dogsList.forEach(dog => {
@@ -126,7 +127,7 @@
   }
   }
 
-  
+
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async () => {
   // Get login form from the DOM
