@@ -64,16 +64,10 @@
         async function getCurrentUser() {
           try {
             const response = await fetch('/api/users/me', {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  reviewId: reviewId
-              })
+              method: 'GET'
           });
           const result = await response.json();
-
+          
 
 
 
