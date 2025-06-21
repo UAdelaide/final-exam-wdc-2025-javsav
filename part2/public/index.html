@@ -134,10 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const result = await response.json();
-      // Login successful
+      // Fetched dog list successfully
       if (response.ok) {
-          
-      } else { // Error with login
+        
+
+      } else { // Error fetching list of dogs
           formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
           formMessageDiv.classList.add('error');
           formMessageDiv.style.display = 'block';
