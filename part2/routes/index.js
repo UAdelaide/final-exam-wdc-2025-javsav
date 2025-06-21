@@ -16,10 +16,20 @@ module.exports = function(pool) {
       const user = req.session.user;
 
       if (user.role === 'owner') {
-          res.render('owner-dashboard', { user: user });
+
+        // Get list of user's dogs
+        const [dogs] = await pool.execute('SELECT name, dog_id FROM Dogs WHERE owner_id = ?', [req.session.user.id]);
+
+        res.render('owner-dashboard', {
+            user: user,
+            dogs: dogs
+         });
+
       } else if (user.role === 'walker') {
           res.render('walker-dashboard', { user: user });
       }
+
+
   // Catch any errors
   } catch (error) {
       console.error('Error rendering dashboard:', error);

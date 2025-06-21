@@ -20,8 +20,18 @@
       <div class="card-body">
         <form @submit.prevent="submitWalkRequest">
           <div class="mb-3">
-            <label class="form-label">Dog ID</label>
-            <input v-model="form.dog_id" type="number" class="form-control" required>
+            <label for="dog-name" class="form-label">Select your dog</label><br>
+
+          <% if (dogs && dogs.length > 0) { %>
+        <select name="dog-name" id="dog-name">
+          <% dogs.forEach(dog => { %>
+
+         <option value="<%= dog.name %>"><%= dog.name %></option>
+         <% }); %>
+         </select><br>
+         <% } else { %>
+          <p style="color: red">You currently have no dogs registerd on the system.</p><br>
+          <% } %>
           </div>
           <div class="mb-3">
             <label class="form-label">Requested Date & Time</label>
