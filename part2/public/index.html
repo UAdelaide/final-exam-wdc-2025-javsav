@@ -58,7 +58,7 @@
     window.location.href = "/register.html";
   }
 
-  function renderdogList() {
+  function renderdogList(dogList) {
       const dogTable = document.getElementById('dog-table');
   }
 
@@ -97,25 +97,7 @@
         const dogListWithImages = await Promise.all(imageFetchPromises);
         renderdogList(dogListWithImages);
     });
-    // Iterate through each dog and display in the table
-          dogListWithImages.forEach(dog => {
-            let newRow = document.createElement('tr');
-            let newDogName = document.createElement('td');
-            newDogName.textContent = dog.dog_name;
-            let newDogImageCell = document.createElement('td');
-            newDogImageCell.innerHTML = `<img src=${dog.imageUrl} alt="A random picture of a dog">`;
-            let newOwner = document.createElement('td');
-            newOwner.textContent = dog.owner_username;
-            let newSize = document.createElement('td');
-            newSize.textContent = dog.size;
-
-            newRow.appendChild(newDogName);
-            newRow.appendChild(newDogImageCell);
-            newRow.appendChild(newOwner);
-            newRow.appendChild(newSize);
-            dogTable.appendChild(newRow);
-
-          });
+  
         }
 
       } else { // Error fetching list of dogs
