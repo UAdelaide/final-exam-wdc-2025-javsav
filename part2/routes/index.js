@@ -20,6 +20,7 @@ module.exports = function(pool) {
         // Get list of user's dogs
         const [dogs] = await pool.execute('SELECT name, dog_id FROM Dogs WHERE owner_id = ?', [req.session.user.id]);
 
+        // Pass dogs through to ejs template
         res.render('owner-dashboard', {
             user: user,
             dogs: dogs
