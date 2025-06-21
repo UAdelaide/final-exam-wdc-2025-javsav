@@ -87,6 +87,7 @@
             const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
             const imageData = await imageResponse.json();
             dogImageDiv.innerHTML = `<img class="dog-image" src=${imageData.message} alt="A random picture of a dog">`;
+            newDogImageCell.appendChild(dogImageDiv);
             let newOwner = document.createElement('td');
             newOwner.textContent = dog.owner_username;
             console.log(dog.owner_username);
