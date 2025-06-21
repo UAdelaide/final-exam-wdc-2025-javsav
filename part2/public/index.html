@@ -79,12 +79,14 @@
 
     // Iterate through each dog and display in the table
           dogsList.forEach(async dog => {
+            // Create table elements and place data from database into them
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
             let newDogImageCell = document.createElement('td');
             let dogImageDiv = document.createElement('div');
             dogImageDiv.className = 'dog-image-div';
+            
             const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
             const imageData = await imageResponse.json();
             dogImageDiv.innerHTML = `<img class="dog-image" src=${imageData.message} alt="A random picture of a dog">`;
@@ -94,7 +96,7 @@
             console.log(dog.owner_username);
             let newSize = document.createElement('td');
             newSize.textContent = dog.size;
-
+            // Append table elements into the table row and append row into the table
             newRow.appendChild(newDogName);
             newRow.appendChild(newDogImageCell);
             newRow.appendChild(newOwner);
