@@ -74,7 +74,7 @@
     window.location.href = "/register.html";
   }
 // Wait for the page to load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Get login form from the DOM
   const form = document.getElementById('login-form');
   const formMessageDiv = document.getElementById('form-message');
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
           result.forEach(dog => {
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.name;
-            
+
           });
         }
 
