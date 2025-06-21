@@ -130,23 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Send POST request to the server
   try {
       const response = await fetch('/api/dogs', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+          method: 'GET'
       });
 
       const result = await response.json();
       // Login successful
       if (response.ok) {
-          formMessageDiv.textContent = result.message || 'Login successful!';
-          messageDiv.classList.remove('error');
-          formMessageDiv.classList.add('success'); // Display success message in green
-          formMessageDiv.style.display = 'block';
-          form.reset();
-          // Redirect user to correct page based upon their role
-            window.location.href = '/dashboard';
+          
       } else { // Error with login
           formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
           formMessageDiv.classList.add('error');
