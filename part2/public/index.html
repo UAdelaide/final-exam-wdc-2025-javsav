@@ -57,7 +57,7 @@
   function goToRegistration() {
     window.location.href = "/register.html";
   }
-
+  let dogListWithImages;
   async function loadDogList() {
     // Fetch the list of dogs from the database
     const formMessageDiv = document.getElementById('form-message');
@@ -90,7 +90,7 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
-        const dogListWithImages = await Promise.all(imageFetchPromises);
+        dogListWithImages = await Promise.all(imageFetchPromises);
     });
     // Iterate through each dog and display in the table
           dogListWithImages.forEach(dog => {
