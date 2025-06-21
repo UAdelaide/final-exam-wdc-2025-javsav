@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const result = await response.json();
       // Fetched dog list successfully
       if (result.ok) {
+        console.log(result[0].dog_name);
         if (result.length > 0) {
           result.forEach(dog => {
             console.log(dog.dog_name);
