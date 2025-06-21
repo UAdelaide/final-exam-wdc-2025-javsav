@@ -90,10 +90,10 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
-        dogListWithImages = await Promise.all()
+        dogListWithImages = await Promise.all(imageFetchPromises);
     });
     // Iterate through each dog and display in the table
-          dogsList.forEach(dog => {
+          dogListWithImages.forEach(dog => {
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
