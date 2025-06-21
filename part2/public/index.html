@@ -136,7 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
       // Fetched dog list successfully
       if (response.ok) {
-        if (dogs && dogs.length > 0)
+        if (result.length > 0) {
+
+        }
 
       } else { // Error fetching list of dogs
           formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
