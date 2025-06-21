@@ -58,9 +58,9 @@
     window.location.href = "/register.html";
   }
 
-  async function loadDogImages() {
+  async function loadDogList() {
     // Fetch the list of dogs from the database
-  const formMessageDiv = document.getElementById('form-message');
+    const formMessageDiv = document.getElementById('form-message');
   const dogTable = document.getElementById('dog-table');
 
   // Send POST request to the server
@@ -124,6 +124,10 @@
       formMessageDiv.classList.add('error'); // Display error message in red
       formMessageDiv.style.display = 'block';
   }
+  }
+
+  function renderDogList() {
+    
   }
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async () => {
