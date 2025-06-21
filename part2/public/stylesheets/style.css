@@ -160,7 +160,9 @@ button:hover {
 
 /* Dog image style */
 .dog-image {
-    
+    margin: auto;
+    width: 150px;
+    height: 150px;
 }
 
 /* Styling for error and success messages */
