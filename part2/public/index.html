@@ -81,6 +81,8 @@
             newDogName.textContent = dog.dog_name;
             let newOwner = document.createElement('td');
             newOwner.textContent = dog.owner_username;
+            let newSize = document.createElement('td');
+            newSize.textContent = dog.size;
             
             newRow.appendChild(newDogName);
             newRow.appendChild(newOwner);
