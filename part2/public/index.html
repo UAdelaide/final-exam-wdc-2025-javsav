@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await response.json();
       // Fetched dog list successfully
-      if (response.ok) {
+      if (result.ok) {
         if (result.length > 0) {
-
+          result.forEach(dog => {
         }
 
       } else { // Error fetching list of dogs
