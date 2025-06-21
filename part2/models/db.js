@@ -19,7 +19,7 @@ module.exports = (async () => {
     //   password: ''
     // });
 
-
+    // Create the database if it doesn't exist;
     await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await connection.end();
 
