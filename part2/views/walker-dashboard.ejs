@@ -67,7 +67,7 @@
               method: 'GET'
           });
           const result = await response.json();
-          return result.user.id;
+          return result.id;
 
       } catch (error) {
           console.error('Error getting userid:', error);
