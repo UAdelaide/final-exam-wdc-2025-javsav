@@ -184,6 +184,11 @@ button:hover {
 
 
 /* Style for table */
+
+.table-responsive {
+    background-color: rgba(202, 198, 198, 0.767);
+}
+
 .h2-table {
   text-align: center;
   padding: 20px 0;
