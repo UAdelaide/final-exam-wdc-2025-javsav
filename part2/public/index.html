@@ -90,7 +90,7 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
-        dogListWithImages = await Promise.all(imageFetchPromises);
+        const dogListWithImages = await Promise.all(imageFetchPromises);
     });
     // Iterate through each dog and display in the table
           dogListWithImages.forEach(dog => {
