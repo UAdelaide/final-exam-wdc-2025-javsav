@@ -193,7 +193,9 @@ button:hover {
 
 .table-bordered {
   border: 1px solid #ddd !important;
-  width: 800px;
+  width: 1200px;
+  height: 700px;
+  overflow: auto;
 }
 
 table caption {
