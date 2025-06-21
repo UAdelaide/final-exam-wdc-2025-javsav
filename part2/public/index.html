@@ -91,7 +91,7 @@
 
       const result = await response.json();
       // Fetched dog list successfully
-      if (result.ok) {
+      if (response.ok) {
         const { dogs } = result.body;
         console.log("test");
         if (dogs.length > 0) {
