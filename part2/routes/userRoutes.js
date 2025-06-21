@@ -82,6 +82,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Get the user object from the session
 router.get('/me', (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: 'Not logged in' });
