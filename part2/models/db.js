@@ -19,9 +19,9 @@ module.exports = (async () => {
     //   password: ''
     // });
 
-    // await connection.query('DROP DATABASE IF EXISTS DogWalkService');
-    // await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
-    // await connection.end();
+
+    await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
+    await connection.end();
 
     // Create database connection pool
     const pool = mysql.createPool(dbConfig);
