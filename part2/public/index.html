@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    const { createAppref, onMounted } = Vue;
+    const { createApp, ref, onMounted } = Vue;
     createApp({
 
       setup() {
@@ -223,6 +223,9 @@ const fetchAllData = async () => {
         isLoading.value = false;
     }
 };
+onMounted(() => {
+                    fetchAllData();
+                });
       },
       data() {
         return {
