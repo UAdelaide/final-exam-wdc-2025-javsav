@@ -30,7 +30,7 @@ module.exports = (async () => {
 
     // Create users table if it doesn't exist
     const [rows] = await pool.execute('SHOW TABLES LIKE "Users"');
-    if (rows[0].count === 0) {
+    if (rows.length === 0) {
       await pool.execute(`
     CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
