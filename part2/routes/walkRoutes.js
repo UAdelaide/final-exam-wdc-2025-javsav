@@ -43,12 +43,12 @@ router.post('/:id/apply', async (req, res) => {
   const { walker_id } = req.body;
 
   try {
-    await db.query(`
+    await pool.query(`
       INSERT INTO WalkApplications (request_id, walker_id)
       VALUES (?, ?)
     `, [requestId, walker_id]);
 
-    await db.query(`
+    await pool.query(`
       UPDATE WalkRequests
       SET status = 'accepted'
       WHERE request_id = ?
