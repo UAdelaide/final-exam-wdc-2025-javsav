@@ -41,6 +41,7 @@ module.exports = function(pool) {
   /* Returns a list of all dogs with their size and owner name */
 router.get('/api/dogs', async function(req, res, next) {
   try {
+    // Query databaes for dogs
   const [result] = await pool.query(
         'SELECT Dogs.name as dog_name, Dogs.size, Users.username as owner_username FROM Dogs JOIN Users on Users.user_id = Dogs.owner_id'
   );
