@@ -66,7 +66,7 @@
     // Fetch the list of dogs from the database
     const formMessageDiv = document.getElementById('form-message');
   const dogTable = document.getElementById('dog-table');
-  let dogListWithImages;
+
   // Send POST request to the server
   try {
       const response = await fetch('/api/dogs', {
@@ -94,7 +94,8 @@
         }
         // If the image fetch fails append null
         return { ...dog, imageUrl: null };
-        dogListWithImages = await Promise.all(imageFetchPromises);
+        const dogListWithImages = await Promise.all(imageFetchPromises);
+        renderdogList(dogListWithImages);
     });
     // Iterate through each dog and display in the table
           dogListWithImages.forEach(dog => {
