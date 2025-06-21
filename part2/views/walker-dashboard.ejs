@@ -60,12 +60,14 @@
             error.value = err.message;
           }
         }
-
+      // Get the current userid from the session
       async function getCurrentUser() {
           try {
+            // Fetch the api/users/me endpoint
             const response = await fetch('/api/users/me', {
               method: 'GET'
           });
+          // Await the result
           const result = await response.json();
           return result.id;
 
