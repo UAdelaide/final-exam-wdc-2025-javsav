@@ -89,10 +89,10 @@
           method: 'GET'
       });
 
-      const result = await response.json();
+
       // Fetched dog list successfully
       if (response.ok) {
-        const dogs = result.dogs;
+        const dogs = await response.json();
         console.log("test");
         if (dogs.length > 0) {
           result.forEach(dog => {
