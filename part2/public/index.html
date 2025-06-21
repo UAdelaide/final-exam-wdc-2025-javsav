@@ -29,35 +29,37 @@
     <div class="col-xs-12">
       <div class="table-responsive" data-pattern="priority-columns">
         <table class="table table-bordered table-hover" id="dog-table">
-          <thead>
-            <tr>
-              <th>Dog Name</th>
-              <th>Picture</th>
-              <th>Owner Username</th>
-              <th>Size</th>
-              <th data-priority="4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="dog-name">
-              <td></td>
-            </tr>
-            <tr>
+           <tbody>
 
-            </tr>
-            <tr id="dog-picture">
-              <td ></td>
-            </tr>
-            <tr id="owner-username">
-              <td></td>
-            </tr>
-            <tr id="dog-size">
-                <td></td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-          </tbody>
+                <tr v-for="dog in dogs" :key="dog.dog_name + dog.owner_username">
+                    <!-- Display dog name -->
+                    <td>{{ dog.dog_name }}</td>
+
+                    <!-- Display dog picture -->
+                    <td>
+                        <img v-if="dog.imageUrl" :src="dog.imageUrl" :alt="'A picture of ' + dog.dog_name" style="width: 150px; height: auto; border-radius: 5px;">
+                        <!-- Show a placeholder while the image for this specific dog is loading -->
+                        <span v-else>Loading image...</span>
+                    </td>
+
+                    <!-- Display owner username -->
+                    <td>{{ dog.owner_username }}</td>
+
+                    <!-- Display dog size -->
+                    <td>{{ dog.size }}</td>
+
+                </tr>
+
+                <!-- Show loading message -->
+                <tr v-if="isLoading">
+                    <td colspan="5" class="text-center fst-italic">Loading dogs from the database...</td>
+                </tr>
+
+                <!-- Show a message if no dogs are present -->
+                <tr v-if="!isLoading && dogs.length === 0">
+                    <td colspan="5" class="text-center">No dogs found.</td>
+                </tr>
+            </tbody>
           <tfoot>
           </tfoot>
         </table>
