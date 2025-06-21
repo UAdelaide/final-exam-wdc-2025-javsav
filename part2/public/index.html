@@ -29,37 +29,35 @@
     <div class="col-xs-12">
       <div class="table-responsive" data-pattern="priority-columns">
         <table class="table table-bordered table-hover" id="dog-table">
-           <tbody>
+          <thead>
+            <tr>
+              <th>Dog Name</th>
+              <th>Picture</th>
+              <th>Owner Username</th>
+              <th>Size</th>
+              <th data-priority="4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="dog-name">
+              <td></td>
+            </tr>
+            <tr>
 
-                <tr v-for="dog in dogs" :key="dog.dog_name + dog.owner_username">
-                    <!-- Display dog name -->
-                    <td>{{ dog.dog_name }}</td>
-
-                    <!-- Display dog picture -->
-                    <td>
-                        <img v-if="dog.imageUrl" :src="dog.imageUrl" :alt="'A picture of ' + dog.dog_name" style="width: 150px; height: auto; border-radius: 5px;">
-                        <!-- Show a placeholder while the image for this specific dog is loading -->
-                        <span v-else>Loading image...</span>
-                    </td>
-
-                    <!-- Display owner username -->
-                    <td>{{ dog.owner_username }}</td>
-
-                    <!-- Display dog size -->
-                    <td>{{ dog.size }}</td>
-
-                </tr>
-
-                <!-- Show loading message -->
-                <tr v-if="isLoading">
-                    <td colspan="5" class="text-center fst-italic">Loading dogs from the database...</td>
-                </tr>
-
-                <!-- Show a message if no dogs are present -->
-                <tr v-if="!isLoading && dogs.length === 0">
-                    <td colspan="5" class="text-center">No dogs found.</td>
-                </tr>
-            </tbody>
+            </tr>
+            <tr id="dog-picture">
+              <td ></td>
+            </tr>
+            <tr id="owner-username">
+              <td></td>
+            </tr>
+            <tr id="dog-size">
+                <td></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+          </tbody>
           <tfoot>
           </tfoot>
         </table>
@@ -76,49 +74,49 @@
     window.location.href = "/register.html";
   }
 
-  // async function loadDogList() {
-  //   // Fetch the list of dogs from the database
-  // const formMessageDiv = document.getElementById('form-message');
-  // const dogTable = document.getElementById('dog-table');
-  // const dogNameColumn = document.getElementById('dog-name');
-  // const dogPictureColumn = document.getElementById('dog-picture');
-  // const ownerUsernameColumn = document.getElementById('owner-username');
-  // const dogSizeColumn = document.getElementById('dog-size');
+  async function loadDogList() {
+    // Fetch the list of dogs from the database
+    const formMessageDiv = document.getElementById('form-message');
+  const dogTable = document.getElementById('dog-table');
+  const dogNameColumn = document.getElementById('dog-name');
+  const dogPictureColumn = document.getElementById('dog-picture');
+  const ownerUsernameColumn = document.getElementById('owner-username');
+  const dogSizeColumn = document.getElementById('dog-size');
 
-  // // Send POST request to the server
-  // try {
-  //     const response = await fetch('/api/dogs', {
-  //         method: 'GET'
-  //     });
+  // Send POST request to the server
+  try {
+      const response = await fetch('/api/dogs', {
+          method: 'GET'
+      });
 
-  //     const result = await response.json();
-  //     // Fetched dog list successfully
-  //     if (result.ok) {
-  //       const { dogs } = result.body;
-  //       console.log("test");
-  //       if (dogs.length > 0) {
-  //         result.forEach(dog => {
-  //           console.log(dog.dog_name);
-  //           let newDogName = document.createElement('td');
-  //           newDogName.textContent = dog.dog_name;
-  //           dogNameColumn.appendChild(newDogName);
+      const result = await response.json();
+      // Fetched dog list successfully
+      if (result.ok) {
+        const { dogs } = result.body;
+        console.log("test");
+        if (dogs.length > 0) {
+          result.forEach(dog => {
+            console.log(dog.dog_name);
+            let newDogName = document.createElement('td');
+            newDogName.textContent = dog.dog_name;
+            dogNameColumn.appendChild(newDogName);
 
-  //         });
-  //       }
+          });
+        }
 
-  //     } else { // Error fetching list of dogs
-  //         formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
-  //         formMessageDiv.classList.add('error');
-  //         formMessageDiv.style.display = 'block';
-  //     }
+      } else { // Error fetching list of dogs
+          formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
+          formMessageDiv.classList.add('error');
+          formMessageDiv.style.display = 'block';
+      }
 
-  // } catch (error) { // Catch any errors and display error message
-  //     console.error('Error loading dog list', error);
-  //     formMessageDiv.textContent = 'Error loading list of dogs.';
-  //     formMessageDiv.classList.add('error'); // Display error message in red
-  //     formMessageDiv.style.display = 'block';
-  // }
-  // }
+  } catch (error) { // Catch any errors and display error message
+      console.error('Error loading dog list', error);
+      formMessageDiv.textContent = 'Error loading list of dogs.';
+      formMessageDiv.classList.add('error'); // Display error message in red
+      formMessageDiv.style.display = 'block';
+  }
+  }
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async () => {
   // Get login form from the DOM
@@ -170,67 +168,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       formMessageDiv.style.display = 'block';
   }
 });
+      loadDogList();
 
 });
 
 
 
-    const { createApp, ref, onMounted } = Vue;
+    const { createApp } = Vue;
     createApp({
-
-      setup() {
-    const dogs = ref([]);
-const isLoading = ref(true); // Used to show loading message
-
-// Fetch dog list data from api and image from from dogapi
-const fetchAllData = async () => {
-    try {
-      // Fetch dogs from backend
-      const dogsResponse = await fetch('/api/dogs');
-      if (!dogsResponse.ok) {
-          throw new Error('Failed to fetch dog list from the server.');
-      }
-      const dogsData = await dogsResponse.json();
-
-      // Fetch random image from dog api
-      const imageFetchPromises = dogsData.dogs.map(async (dog) => {
-          try {
-              const imageResponse = await fetch('https://dog.ceo/api/breeds/image/random');
-              const imageData = await imageResponse.json();
-
-              // Add the new imageUrl to the dog object
-              if (imageData.status === 'success') {
-                  return { ...dog, imageUrl: imageData.message };
-              }
-          } catch (e) {
-              console.error('Failed to fetch an image for a dog', e);
-          }
-
-          return { ...dog, imageUrl: null };
-      });
-
-        const dogsWithImages = await Promise.all(imageFetchPromises);
-
-        // Update dogs array with data
-        dogs.value = dogsWithImages;
-
-    } catch (error) {
-        console.error('Error in fetchAllData:', error);
-
-    } finally {
-        // Hide loading message
-        isLoading.value = false;
-    }
-};
-      onMounted(() => {
-          fetchAllData();
-      });
-      },
       data() {
         return {
-          message: 'Welcome to the Dog Walking Service!',
-          dogs,
-          isLoading
+          message: 'Welcome to the Dog Walking Service!'
         };
       }
     }).mount('#app');
