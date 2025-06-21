@@ -69,6 +69,7 @@
           });
           // Await the result
           const result = await response.json();
+          // Return the id from the user object
           return result.id;
 
       } catch (error) {
