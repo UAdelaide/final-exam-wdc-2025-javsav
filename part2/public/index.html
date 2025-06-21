@@ -75,7 +75,47 @@
   }
 
   async function loadDogList() {
+    // Fetch the list of dogs from the database
+    const formMessageDiv = document.getElementById('form-message');
+  const dogTable = document.getElementById('dog-table');
+  const dogNameColumn = document.getElementById('dog-name');
+  const dogPictureColumn = document.getElementById('dog-picture');
+  const ownerUsernameColumn = document.getElementById('owner-username');
+  const dogSizeColumn = document.getElementById('dog-size');
 
+  // Send POST request to the server
+  try {
+      const response = await fetch('/api/dogs', {
+          method: 'GET'
+      });
+
+      const result = await response.json();
+      // Fetched dog list successfully
+      if (result.ok) {
+        const { dogs } = result.body;
+        console.log("test");
+        if (dogs.length > 0) {
+          result.forEach(dog => {
+            console.log(dog.dog_name);
+            let newDogName = document.createElement('td');
+            newDogName.textContent = dog.dog_name;
+            dogNameColumn.appendChild(newDogName);
+
+          });
+        }
+
+      } else { // Error fetching list of dogs
+          formMessageDiv.textContent = `Error: ${result.message || response.statusText}`;
+          formMessageDiv.classList.add('error');
+          formMessageDiv.style.display = 'block';
+      }
+
+  } catch (error) { // Catch any errors and display error message
+      console.error('Error loading dog list', error);
+      formMessageDiv.textContent = 'Error loading list of dogs.';
+      formMessageDiv.classList.add('error'); // Display error message in red
+      formMessageDiv.style.display = 'block';
+  }
   }
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', async () => {
@@ -128,8 +168,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       formMessageDiv.style.display = 'block';
   }
 });
+      loadDogList();
 
-  
 });
 
 
