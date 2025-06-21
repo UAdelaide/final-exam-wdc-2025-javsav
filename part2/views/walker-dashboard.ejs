@@ -67,12 +67,10 @@
               method: 'GET'
           });
           const result = await response.json();
-          
-
-
+          return result.user.id;
 
       } catch (error) {
-          console.error('Error deleting review:', error);
+          console.error('Error getting userid:', error);
       }
         }
 
