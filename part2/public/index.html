@@ -93,7 +93,7 @@
         dogListWithImages = await Promise.all(imageFetchPromises);
     });
     // Iterate through each dog and display in the table
-          dogsList.forEach(dog => {
+            dogsList.forEach(dog => {
             let newRow = document.createElement('tr');
             let newDogName = document.createElement('td');
             newDogName.textContent = dog.dog_name;
